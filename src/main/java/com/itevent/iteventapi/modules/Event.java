@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,12 +36,10 @@ public class Event {
     private String title;
 
     @Column(nullable = false)
-//    @DateTimeFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime eventStartDate;
 
     @Column(nullable = false)
-//    @DateTimeFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime eventLastDate;
 
@@ -82,11 +79,11 @@ public class Event {
     private String onlineEnrollInfo;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
 
     @Column
-    @DateTimeFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime updatedDate;
 
 }

@@ -1,6 +1,8 @@
 package com.itevent.iteventapi.modules;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,4 +27,13 @@ public class EventController {
         System.out.println(event.toString());
         return event;
     }
+
+    @PatchMapping("/event/{id}")
+    public ResponseEntity<Event> updateEvent(@RequestBody Event event) {
+        System.out.println("event 업데이트");
+
+        return new ResponseEntity<Event>(event, HttpStatus.OK);
+    }
+
+
 }
