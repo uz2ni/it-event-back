@@ -1,11 +1,10 @@
 package com.itevent.iteventapi.modules.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
+import com.itevent.iteventapi.common.CommonField;
+import com.itevent.iteventapi.config.ModelMapperUtils;
+import com.itevent.iteventapi.modules.event.dto.EventReqDto;
+import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @EqualsAndHashCode(of = "id")
-public class Event {
+public class Event extends CommonField {
 
     @Id @GeneratedValue
     private Long id;
@@ -77,13 +76,16 @@ public class Event {
 
     @Column
     private String onlineEnrollInfo;
+//
+//    @Column(nullable = false)
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+//    private LocalDateTime createdDate;
+//
+//    @Column
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+//    private LocalDateTime updatedDate;
 
-    @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime createdDate;
-
-    @Column
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime updatedDate;
-
+    public static Event of(EventReqDto eventReqDto) {
+        return ModelMapperUtils.getModelMapper().map(eventReqDto, Event.class);
+    }
 }
