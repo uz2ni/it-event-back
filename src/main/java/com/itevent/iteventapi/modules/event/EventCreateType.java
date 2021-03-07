@@ -1,4 +1,4 @@
-package com.itevent.iteventapi.modules;
+package com.itevent.iteventapi.modules.event;
 
 public enum EventCreateType {
     INNER, OUTER

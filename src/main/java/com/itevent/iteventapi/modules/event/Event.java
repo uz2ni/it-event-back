@@ -1,4 +1,4 @@
-package com.itevent.iteventapi.modules;
+package com.itevent.iteventapi.modules.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.EqualsAndHashCode;
