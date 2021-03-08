@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -19,10 +20,19 @@ public class EventService {
         Event event = Event.of(eventReqDto);
         event.setHostId(1L);
         Event newEvent = eventRepository.save(event);
-        System.out.println("event entity:");
-        System.out.println(event);
-//        System.out.println(event.getCreatedDate());
-//        System.out.println(event.getUpdatedDate());
+
+        return EventResDto.of(newEvent);
+    }
+
+    public EventResDto updateEvent(EventReqDto eventReqDto, Long id) {
+        Event event = eventRepository.findById(id).orElse(null);
+        if(event == null) {
+            throw new IllegalArgumentException("요청에 해당하는 행사가 없습니다.");
+        }
+        event = Event.of(eventReqDto);
+        event.setId(id);
+        eventRepository.save(event);
+
         return EventResDto.of(event);
     }
 }

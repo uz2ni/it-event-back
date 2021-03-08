@@ -2,41 +2,47 @@ package com.itevent.iteventapi.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.apache.tomcat.jni.Local;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Getter
 @MappedSuperclass
-@Data
+@EntityListeners(AuditingEntityListener.class)
 public abstract class CommonField {
 
     private static final long serialVersionUID = -4808539823377841033L;
     private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-
-    @Column( nullable = false, updatable = false)
+    @CreatedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
-    private Timestamp createdDate;
+    private LocalDateTime createdDate;
 
+
+    @LastModifiedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
-    private Timestamp updatedDate;
+    private LocalDateTime updatedDate;
 
+//    @Column( nullable = false, updatable = false)
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
+//    private Timestamp createdDate;
 //
-    @PrePersist
-    protected void onCreate() {
-        createdDate = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
-    }
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
+//    private Timestamp updatedDate;
 
-    @PreUpdate
-    protected void onUpdate() {
-        updatedDate = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
-    }
+//    @PrePersist
+//    protected void onCreate() {
+//        createdDate = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
+//    }
+//
+//    @PreUpdate
+//    protected void onUpdate() {
+//        updatedDate = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
+//    }
 }
