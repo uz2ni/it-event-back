@@ -76,16 +76,12 @@ public class Event extends CommonField {
 
     @Column
     private String onlineEnrollInfo;
-//
-//    @Column(nullable = false)
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-//    private LocalDateTime createdDate;
-//
-//    @Column
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-//    private LocalDateTime updatedDate;
 
-    public static Event of(EventReqDto eventReqDto) {
+    public static Event of(EventReqDto.createReq eventReqDto) {
         return ModelMapperUtils.getModelMapper().map(eventReqDto, Event.class);
+    }
+
+    public static void of(EventReqDto.updateReq eventReqDto, Event event) {
+        ModelMapperUtils.getModelMapper().map(eventReqDto, event);
     }
 }

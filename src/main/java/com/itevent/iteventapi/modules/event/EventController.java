@@ -28,23 +28,24 @@ public class EventController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity<JsonResponse> addEvent(@RequestBody EventReqDto eventReqDto) {
+    public ResponseEntity<JsonResponse> addEvent(@RequestBody EventReqDto.createReq eventReqDto) {
         EventResDto eventResDto = eventService.createEvent(eventReqDto);
         return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
     }
 
-    @PatchMapping("/events/{id}")
-    public ResponseEntity<JsonResponse> updateEvent(@PathVariable Long id, @RequestBody EventReqDto eventReqDto) {
+    @PatchMapping("/events")
+    public ResponseEntity<JsonResponse> updateEvent(@RequestBody EventReqDto.updateReq eventReqDto) {
 
-        EventResDto eventResDto = eventService.updateEvent(eventReqDto, id);
+        EventResDto eventResDto = eventService.updateEvent(eventReqDto);
 
         return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
     }
-
+/*
     @DeleteMapping("/events/{id}")
     public ResponseEntity<JsonResponse> deleteEvent(@PathVariable Long id) {
         System.out.println("event 삭제");
 
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
+    */
 }

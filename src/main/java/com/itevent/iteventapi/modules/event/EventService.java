@@ -16,7 +16,7 @@ public class EventService {
 
     private final EventRepository eventRepository;
 
-    public EventResDto createEvent(EventReqDto eventReqDto) {
+    public EventResDto createEvent(EventReqDto.createReq eventReqDto) {
         Event event = Event.of(eventReqDto);
         event.setHostId(1L);
         Event newEvent = eventRepository.save(event);
@@ -24,14 +24,16 @@ public class EventService {
         return EventResDto.of(newEvent);
     }
 
-    public EventResDto updateEvent(EventReqDto eventReqDto, Long id) {
-        Event event = eventRepository.findById(id).orElse(null);
+    public EventResDto updateEvent(EventReqDto.updateReq eventReqDto) {
+        Event event = eventRepository.findById(eventReqDto.getId()).orElse(null);
         if(event == null) {
             throw new IllegalArgumentException("요청에 해당하는 행사가 없습니다.");
         }
-        event = Event.of(eventReqDto);
-        event.setId(id);
-        eventRepository.save(event);
+        Event.of(eventReqDto, event);
+        // 영속상태일까???
+        System.out.println(event.toString());
+//
+//        eventRepository.save(event);
 
         return EventResDto.of(event);
     }
