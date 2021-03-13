@@ -18,7 +18,7 @@ public class EventController {
     @GetMapping("/events/{id}")
     public ResponseEntity<JsonResponse> getEvent(@PathVariable Long id) {
 
-        Event event = eventRepository.findById(id).orElse(null);
+        Event event = eventService.getEvent(id);
 
         if(event == null) {
             return new ResponseEntity<JsonResponse>(new JsonResponse(HttpStatus.BAD_REQUEST, "요청 정보에 대한 데이터가 존재하지 않습니다."), HttpStatus.BAD_REQUEST);
@@ -28,24 +28,21 @@ public class EventController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity<JsonResponse> addEvent(@RequestBody EventReqDto.createReq eventReqDto) {
+    public ResponseEntity<JsonResponse> addEvent(@RequestBody EventReqDto eventReqDto) {
         EventResDto eventResDto = eventService.createEvent(eventReqDto);
         return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
     }
 
-    @PatchMapping("/events")
-    public ResponseEntity<JsonResponse> updateEvent(@RequestBody EventReqDto.updateReq eventReqDto) {
-
-        EventResDto eventResDto = eventService.updateEvent(eventReqDto);
-
+    @PatchMapping("/events/{id}")
+    public ResponseEntity<JsonResponse> updateEvent(@PathVariable Long id, @RequestBody EventReqDto eventReqDto) {
+        EventResDto eventResDto = eventService.updateEvent(id, eventReqDto);
         return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
     }
-/*
+
     @DeleteMapping("/events/{id}")
     public ResponseEntity<JsonResponse> deleteEvent(@PathVariable Long id) {
-        System.out.println("event 삭제");
-
+        eventService.deleteEvent(id);
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
-    */
+
 }

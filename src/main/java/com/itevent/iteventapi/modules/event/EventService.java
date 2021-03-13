@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -16,7 +14,11 @@ public class EventService {
 
     private final EventRepository eventRepository;
 
-    public EventResDto createEvent(EventReqDto.createReq eventReqDto) {
+    public Event getEvent(Long id) {
+        return eventRepository.findById(id).orElse(null);
+    }
+
+    public EventResDto createEvent(EventReqDto eventReqDto) {
         Event event = Event.of(eventReqDto);
         event.setHostId(1L);
         Event newEvent = eventRepository.save(event);
@@ -24,17 +26,25 @@ public class EventService {
         return EventResDto.of(newEvent);
     }
 
-    public EventResDto updateEvent(EventReqDto.updateReq eventReqDto) {
-        Event event = eventRepository.findById(eventReqDto.getId()).orElse(null);
-        if(event == null) {
-            throw new IllegalArgumentException("요청에 해당하는 행사가 없습니다.");
-        }
+    public EventResDto updateEvent(Long id, EventReqDto eventReqDto) {
+        Event event = getEvent(id);
+        ExistEventCheck(event);
         Event.of(eventReqDto, event);
-        // 영속상태일까???
         System.out.println(event.toString());
-//
-//        eventRepository.save(event);
 
         return EventResDto.of(event);
     }
+
+    public void deleteEvent(Long id) {
+        Event event = getEvent(id);
+        ExistEventCheck(event);
+        eventRepository.deleteById(id);
+    }
+
+    private void ExistEventCheck(Event event) {
+        if(event == null) {
+            throw new IllegalArgumentException("행사가 존재하지 않습니다.");
+        }
+    }
+
 }

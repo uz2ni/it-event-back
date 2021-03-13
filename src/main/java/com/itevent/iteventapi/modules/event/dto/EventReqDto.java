@@ -9,90 +9,45 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class EventReqDto {
 
-    @Getter
-    @NoArgsConstructor
-    public static class createReq {
+    private EventCreateType eventCreateType;
 
-        private EventCreateType eventCreateType;
+    private String hostEmail;
 
-        private String hostEmail;
+    private String hostPhone;
 
-        private String hostPhone;
+    private String title;
 
-        private String title;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime eventStartDate;
 
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-        private LocalDateTime eventStartDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime eventLastDate;
 
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-        private LocalDateTime eventLastDate;
+    private EventConceptType eventConceptType;
 
-        private EventConceptType eventConceptType;
+    private boolean isEmailReserveSending;
 
-        private boolean isEmailReserveSending;
+    private String emailSendingMessage;
 
-        private String emailSendingMessage;
+    private boolean isOnline;
 
-        private boolean isOnline;
+    private String location;
 
-        private String location;
+    private String detailLocation;
 
-        private String detailLocation;
+    private String locationDescription;
 
-        private String locationDescription;
+    private String image;
 
-        private String image;
+    private String contents;
 
-        private String contents;
+    private String onlinePlatformInfo;
 
-        private String onlinePlatformInfo;
-
-        private String onlineEnrollInfo;
-    }
-
-    @Getter
-    @NoArgsConstructor
-    public static class updateReq {
-
-        private Long id;
-
-        private EventCreateType eventCreateType;
-
-        private String hostEmail;
-
-        private String hostPhone;
-
-        private String title;
-
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-        private LocalDateTime eventStartDate;
-
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-        private LocalDateTime eventLastDate;
-
-        private EventConceptType eventConceptType;
-
-        private boolean isEmailReserveSending;
-
-        private String emailSendingMessage;
-
-        private boolean isOnline;
-
-        private String location;
-
-        private String detailLocation;
-
-        private String locationDescription;
-
-        private String image;
-
-        private String contents;
-
-        private String onlinePlatformInfo;
-
-        private String onlineEnrollInfo;
-    }
+    private String onlineEnrollInfo;
 
 }

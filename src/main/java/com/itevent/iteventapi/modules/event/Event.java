@@ -77,11 +77,11 @@ public class Event extends CommonField {
     @Column
     private String onlineEnrollInfo;
 
-    public static Event of(EventReqDto.createReq eventReqDto) {
+    public static Event of(EventReqDto eventReqDto) {
         return ModelMapperUtils.getModelMapper().map(eventReqDto, Event.class);
     }
 
-    public static void of(EventReqDto.updateReq eventReqDto, Event event) {
+    public static void of(EventReqDto eventReqDto, Event event) {
         ModelMapperUtils.getModelMapper().map(eventReqDto, event);
     }
 }
