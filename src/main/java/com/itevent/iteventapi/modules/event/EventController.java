@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class EventController {
 
     private final EventService eventService;
-    private final EventRepository eventRepository;
 
     @GetMapping("/events/{id}")
     public ResponseEntity<JsonResponse> getEvent(@PathVariable Long id) {
