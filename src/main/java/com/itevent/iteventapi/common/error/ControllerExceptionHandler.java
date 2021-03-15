@@ -25,11 +25,10 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e){
-//        log.error("IllegalArgumentException : "+exception.getMessage());
 
         System.out.println(e.toString());
 
-        final ErrorResponse response = ErrorResponse.builder()
+        ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .message(e.getMessage())
                 .build();
