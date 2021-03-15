@@ -1,11 +1,16 @@
 package com.itevent.iteventapi.modules.event;
 
+import com.itevent.iteventapi.common.error.CustomNotFoundException;
 import com.itevent.iteventapi.modules.event.dto.EventReqDto;
 import com.itevent.iteventapi.modules.event.dto.EventResDto;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -15,7 +20,10 @@ public class EventService {
     private final EventRepository eventRepository;
 
     public Event getEvent(Long id) {
-        return eventRepository.findById(id).orElse(null);
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("요청한 이벤트가 없습니다. [id : " + id + "]"));
+
+        return event;
     }
 
     public EventResDto createEvent(EventReqDto eventReqDto) {
