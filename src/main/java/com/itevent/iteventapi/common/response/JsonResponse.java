@@ -9,7 +9,6 @@ public class JsonResponse<T> {
 
     private int code;       // HttpStatus Code
     private String message;      // Http Default Message
-    private String errorMessage; // Custom Error Message
     private T data;         // response data
 
     public JsonResponse() {
@@ -26,7 +25,6 @@ public class JsonResponse<T> {
     public JsonResponse(HttpStatus status, String errorMessage) {
         this.code = status.value();
         this.message = status.getReasonPhrase();
-        this.errorMessage = errorMessage;
     }
 
 }

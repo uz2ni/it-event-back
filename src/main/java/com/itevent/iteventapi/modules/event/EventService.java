@@ -1,6 +1,7 @@
 package com.itevent.iteventapi.modules.event;
 
 import com.itevent.iteventapi.common.error.CustomNotFoundException;
+import com.itevent.iteventapi.modules.event.dto.EventListResDto;
 import com.itevent.iteventapi.modules.event.dto.EventReqDto;
 import com.itevent.iteventapi.modules.event.dto.EventResDto;
 import javassist.NotFoundException;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,40 +23,46 @@ public class EventService {
 
     private final EventRepository eventRepository;
 
-    public Event getEvent(Long id) {
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("요청한 이벤트가 없습니다. [id : " + id + "]"));
-
-        return event;
+    public EventResDto getEvent(Long id) {
+        Event event = getEventAndExistCheck(id);
+        return new EventResDto(event);
     }
+
+//    public EventListResDto getEventAll() {
+//        List<Event> events = eventRepository.findAll();
+//        HashMap<Long, Event> e = new HashMap<>();
+//        events.forEach(event -> e.put(event.getId(), event));
+//
+//        return new EventListResDto(e);
+//    }
 
     public EventResDto createEvent(EventReqDto eventReqDto) {
         Event event = Event.of(eventReqDto);
         event.setHostId(1L);
         Event newEvent = eventRepository.save(event);
 
-        return EventResDto.of(newEvent);
+        return new EventResDto(newEvent);
     }
 
     public EventResDto updateEvent(Long id, EventReqDto eventReqDto) {
-        Event event = getEvent(id);
-        ExistEventCheck(event);
+        Event event = getEventAndExistCheck(id);
         Event.of(eventReqDto, event);
         System.out.println(event.toString());
 
-        return EventResDto.of(event);
+        return new EventResDto(event);
     }
 
     public void deleteEvent(Long id) {
-        Event event = getEvent(id);
-        ExistEventCheck(event);
+        Event event = getEventAndExistCheck(id);
         eventRepository.deleteById(id);
     }
 
-    private void ExistEventCheck(Event event) {
+    private Event getEventAndExistCheck(Long id) {
+        Event event = eventRepository.findById(id).orElse(null);
         if(event == null) {
-            throw new IllegalArgumentException("행사가 존재하지 않습니다.");
+            throw new IllegalArgumentException("요청한 이벤트가 없습니다. [id : " + event.getId() + "]");
         }
+        return event;
     }
 
 }

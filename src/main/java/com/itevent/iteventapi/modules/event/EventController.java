@@ -1,6 +1,7 @@
 package com.itevent.iteventapi.modules.event;
 
 import com.itevent.iteventapi.common.response.JsonResponse;
+import com.itevent.iteventapi.modules.event.dto.EventListResDto;
 import com.itevent.iteventapi.modules.event.dto.EventReqDto;
 import com.itevent.iteventapi.modules.event.dto.EventResDto;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +17,15 @@ public class EventController {
 
     @GetMapping("/events/{id}")
     public ResponseEntity<JsonResponse> getEvent(@PathVariable Long id) {
-
-        Event event = eventService.getEvent(id);
-
-        if(event == null) {
-            return new ResponseEntity<JsonResponse>(new JsonResponse(HttpStatus.BAD_REQUEST, "요청 정보에 대한 데이터가 존재하지 않습니다."), HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<JsonResponse>(new JsonResponse(event), HttpStatus.OK);
+        EventResDto eventResDto = eventService.getEvent(id);
+        return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
     }
+
+//    @GetMapping("/events")
+//    public ResponseEntity<JsonResponse> getEventAll() {
+//        EventListResDto eventResDto = eventService.getEventAll();
+//        return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
+//    }
 
     @PostMapping("/events")
     public ResponseEntity<JsonResponse> addEvent(@RequestBody EventReqDto eventReqDto) {

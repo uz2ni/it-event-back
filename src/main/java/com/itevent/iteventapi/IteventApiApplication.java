@@ -1,13 +1,10 @@
 package com.itevent.iteventapi;
 
-import com.itevent.iteventapi.modules.event.Event;
 import com.itevent.iteventapi.modules.event.EventConceptType;
 import com.itevent.iteventapi.modules.event.EventCreateType;
 import com.itevent.iteventapi.modules.event.EventService;
 import com.itevent.iteventapi.modules.event.dto.EventReqDto;
-import com.itevent.iteventapi.modules.event.dto.EventResDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
