@@ -21,11 +21,11 @@ public class EventController {
         return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
     }
 
-//    @GetMapping("/events")
-//    public ResponseEntity<JsonResponse> getEventAll() {
-//        EventListResDto eventResDto = eventService.getEventAll();
-//        return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
-//    }
+    @GetMapping("/events")
+    public ResponseEntity<JsonResponse> getEventAll() {
+        EventListResDto eventResDto = eventService.getEventAll();
+        return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
+    }
 
     @PostMapping("/events")
     public ResponseEntity<JsonResponse> addEvent(@RequestBody EventReqDto eventReqDto) {

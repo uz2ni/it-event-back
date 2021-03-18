@@ -1,11 +1,13 @@
 package com.itevent.iteventapi.common.response;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
+//@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ErrorResponse {
 
     @Builder.Default

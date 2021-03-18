@@ -22,9 +22,4 @@ public class JsonResponse<T> {
         this.data = data;
     }
 
-    public JsonResponse(HttpStatus status, String errorMessage) {
-        this.code = status.value();
-        this.message = status.getReasonPhrase();
-    }
-
 }

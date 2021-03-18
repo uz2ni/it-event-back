@@ -28,13 +28,11 @@ public class EventService {
         return new EventResDto(event);
     }
 
-//    public EventListResDto getEventAll() {
-//        List<Event> events = eventRepository.findAll();
-//        HashMap<Long, Event> e = new HashMap<>();
-//        events.forEach(event -> e.put(event.getId(), event));
-//
-//        return new EventListResDto(e);
-//    }
+    public EventListResDto getEventAll() {
+        List<Event> events = eventRepository.findAll();
+
+        return new EventListResDto(events);
+    }
 
     public EventResDto createEvent(EventReqDto eventReqDto) {
         Event event = Event.of(eventReqDto);
@@ -60,7 +58,7 @@ public class EventService {
     private Event getEventAndExistCheck(Long id) {
         Event event = eventRepository.findById(id).orElse(null);
         if(event == null) {
-            throw new IllegalArgumentException("요청한 이벤트가 없습니다. [id : " + event.getId() + "]");
+            throw new IllegalArgumentException("요청한 이벤트가 없습니다. [id : " + id + "]");
         }
         return event;
     }
