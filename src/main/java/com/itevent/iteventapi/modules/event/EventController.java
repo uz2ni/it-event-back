@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 public class EventController {
@@ -28,7 +30,7 @@ public class EventController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity<JsonResponse> addEvent(@RequestBody EventReqDto eventReqDto) {
+    public ResponseEntity<JsonResponse> addEvent(@Valid @RequestBody EventReqDto eventReqDto) {
         EventResDto eventResDto = eventService.createEvent(eventReqDto);
         return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
     }

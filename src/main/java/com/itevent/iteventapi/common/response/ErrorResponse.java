@@ -1,9 +1,10 @@
 package com.itevent.iteventapi.common.response;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Builder
@@ -20,4 +21,6 @@ public class ErrorResponse {
 
     private int status; // HTTP 상태 값 저장 400, 404, 500 등
 
+    @Builder.Default
+    private Map<String, String> errors = new HashMap<>(); // 에러 내용 여러 건 나타낼 경우 사용
 }
