@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class EventReqDto {
 
+    @NotNull(message = " 올바른 타입 값을 입력하세요.(INNER / OUTER)")
     private EventCreateType eventCreateType;
 
     @Email
@@ -32,12 +33,15 @@ public class EventReqDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime eventLastDate;
 
+    @NotNull(message = "올바른 타입 값을 입력하세요.(CLASS / ACTIVITY / CONFERENCE)")
     private EventConceptType eventConceptType;
 
+    @NotNull
     private boolean isEmailReserveSending;
 
     private String emailSendingMessage;
 
+    @NotNull
     private boolean isOnline;
 
     private String location;
@@ -48,6 +52,7 @@ public class EventReqDto {
 
     private String image;
 
+    @NotBlank
     private String contents;
 
     private String onlinePlatformInfo;
