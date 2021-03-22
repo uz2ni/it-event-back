@@ -11,13 +11,9 @@ import java.util.Map;
 @Data
 public class EventListResDto {
 
-    List<Map<Long, Event>> events = new ArrayList<>();
-
+    List<Event> events;
 
     public EventListResDto(List<Event> list) {
-        Map<Long, Event> map = new HashMap<Long, Event>();
-        list.forEach(event -> map.put(event.getId(), event));
-
-        this.events.add(map);
+        events = list;
     }
 }

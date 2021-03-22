@@ -44,7 +44,7 @@ public class EventController {
     }
 
     @PatchMapping("/events/{id}")
-    public ResponseEntity<JsonResponse> updateEvent(@PathVariable Long id, @RequestBody EventReqDto eventReqDto) {
+    public ResponseEntity<JsonResponse> updateEvent(@PathVariable Long id, @Valid @RequestBody EventReqDto eventReqDto) {
         EventResDto eventResDto = eventService.updateEvent(id, eventReqDto);
         return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
     }
