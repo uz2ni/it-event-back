@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -30,4 +27,11 @@ public class AccountController {
         AccountResDto accountResDto = accountService.createAccount(accountJoinDto);
         return new ResponseEntity<JsonResponse>(new JsonResponse(accountResDto), HttpStatus.OK);
     }
+
+    @GetMapping("/account/{nickname}")
+    public ResponseEntity<JsonResponse> getAccount(@PathVariable String nickname) {
+        AccountResDto accountResDto = accountService.getAccount(nickname);
+        return new ResponseEntity<JsonResponse>(new JsonResponse(accountResDto), HttpStatus.OK);
+    }
+
 }

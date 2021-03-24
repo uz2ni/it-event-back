@@ -25,7 +25,16 @@ public class AccountService {
     private Account saveNewAccount(AccountJoinDto accountJoinDto) {
         accountJoinDto.setPassword(passwordEncoder.encode(accountJoinDto.getPassword()));
         Account account = Account.of(accountJoinDto);
+        accountRepository.save(account);
 
         return account;
+    }
+
+    public AccountResDto getAccount(String nickname) {
+        Account account = accountRepository.findByNickname(nickname);
+         if(account == null) {
+             throw new IllegalArgumentException("요청한 계정이 없습니다. [nickname : " + nickname + "]");
+         }
+         return new AccountResDto(account);
     }
 }
