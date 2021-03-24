@@ -19,7 +19,7 @@ public class AccountService {
     public AccountResDto createAccount(AccountJoinDto accountJoinDto) {
         Account account = saveNewAccount(accountJoinDto);
 
-        return new AccountResDto(account);
+        return AccountResDto.of(account);
     }
 
     private Account saveNewAccount(AccountJoinDto accountJoinDto) {
@@ -35,6 +35,6 @@ public class AccountService {
          if(account == null) {
              throw new IllegalArgumentException("요청한 계정이 없습니다. [nickname : " + nickname + "]");
          }
-         return new AccountResDto(account);
+         return AccountResDto.of(account);
     }
 }

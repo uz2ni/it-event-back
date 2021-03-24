@@ -11,6 +11,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,7 +33,9 @@ public class AccountController {
     @GetMapping("/account/{nickname}")
     public ResponseEntity<JsonResponse> getAccount(@PathVariable String nickname) {
         AccountResDto accountResDto = accountService.getAccount(nickname);
-        return new ResponseEntity<JsonResponse>(new JsonResponse(accountResDto), HttpStatus.OK);
+        Map<String, AccountResDto> map = new HashMap<>();
+        map.put("account", accountResDto);
+        return new ResponseEntity<JsonResponse>(new JsonResponse(map), HttpStatus.OK);
     }
 
 }
