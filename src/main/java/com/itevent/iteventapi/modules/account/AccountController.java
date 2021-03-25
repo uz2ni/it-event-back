@@ -3,6 +3,7 @@ package com.itevent.iteventapi.modules.account;
 import com.itevent.iteventapi.common.response.JsonResponse;
 import com.itevent.iteventapi.modules.account.dto.AccountJoinDto;
 import com.itevent.iteventapi.modules.account.dto.AccountResDto;
+import com.itevent.iteventapi.modules.account.dto.AccountUpdateDto;
 import com.itevent.iteventapi.modules.account.validate.JoinValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,14 @@ public class AccountController {
         map.put("account", accountResDto);
         return new ResponseEntity<JsonResponse>(new JsonResponse(map), HttpStatus.OK);
     }
+
+    @GetMapping("/account/{nickname}")
+    public ResponseEntity<JsonResponse> updateAccount(@PathVariable String nickname, @Valid @RequestBody AccountUpdateDto accountUpdateDto) {
+        AccountResDto accountResDto = accountService.updateAccount(nickname, accountUpdateDto);
+        Map<String, AccountResDto> map = new HashMap<>();
+        map.put("account", accountResDto);
+        return new ResponseEntity<JsonResponse>(new JsonResponse(map), HttpStatus.OK);
+    }
+
 
 }

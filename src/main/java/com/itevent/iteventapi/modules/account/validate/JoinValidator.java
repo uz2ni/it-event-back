@@ -37,7 +37,7 @@ public class JoinValidator implements Validator {
     }
 
     private boolean isDuplicateNickname(AccountJoinDto accountJoinDto) {
-        return accountRepository.existsByNickname(accountJoinDto.getEmail());
+        return accountRepository.existsByNickname(accountJoinDto.getNickname());
     }
 
 
