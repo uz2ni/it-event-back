@@ -36,8 +36,10 @@ public class AccountService {
         return AccountResDto.of(account);
     }
 
-    public AccountResDto updateAccount(String nickname, AccountUpdateDto accountUpdateDto) {
-        Account account = getAccountAndExistCheck(nickname);
+    public AccountResDto updateNickname(AccountUpdateDto.Nickname accountUpdateDto) {
+        Account account = getAccountAndExistCheck(accountUpdateDto.getPrevNickname());
+        account.setNickname(accountUpdateDto.getNewNickname());
+
         return AccountResDto.of(account);
     }
 
@@ -46,6 +48,7 @@ public class AccountService {
         if(account == null) {
             throw new IllegalArgumentException("요청한 계정이 없습니다. [nickname : " + nickname + "]");
         }
+        return account;
     }
 
 }
