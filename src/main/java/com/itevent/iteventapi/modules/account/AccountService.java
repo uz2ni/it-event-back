@@ -24,7 +24,7 @@ public class AccountService {
     }
 
     private Account saveNewAccount(AccountJoinDto accountJoinDto) {
-        accountJoinDto.setPassword(passwordEncoder.encode(accountJoinDto.getPassword()));
+        accountJoinDto.setPassword(getEncodePassword(accountJoinDto.getPassword()));
         Account account = Account.of(accountJoinDto);
         accountRepository.save(account);
 
@@ -43,6 +43,12 @@ public class AccountService {
         return AccountResDto.of(account);
     }
 
+    public void updatePassword(AccountUpdateDto.Password accountUpdateDto) {
+        Account account = getAccountAndExistCheck(accountUpdateDto.getNickname());
+        String encodingPassword = getEncodePassword(accountUpdateDto.getPassword());
+        account.setPassword(encodingPassword);
+    }
+
     private Account getAccountAndExistCheck(String nickname) {
         Account account = accountRepository.findByNickname(nickname);
         if(account == null) {
@@ -51,4 +57,7 @@ public class AccountService {
         return account;
     }
 
+    private String getEncodePassword(String password) {
+        return passwordEncoder.encode(password);
+    }
 }

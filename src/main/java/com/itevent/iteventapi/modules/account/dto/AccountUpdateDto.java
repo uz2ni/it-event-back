@@ -25,7 +25,7 @@ public class AccountUpdateDto {
 	@Setter
 	public static class Password {
 
-		private String prevNickname;
+		private String nickname;
 
 		@NotBlank
 		@Length(min = 8, max = 20)
