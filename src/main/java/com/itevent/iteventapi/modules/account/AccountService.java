@@ -45,7 +45,7 @@ public class AccountService {
 
     public void updatePassword(AccountUpdateDto.Password accountUpdateDto) {
         Account account = getAccountAndExistCheck(accountUpdateDto.getNickname());
-        String encodingPassword = getEncodePassword(accountUpdateDto.getPassword());
+        String encodingPassword = getEncodePassword(accountUpdateDto.getNewPassword());
         account.setPassword(encodingPassword);
     }
 
@@ -59,5 +59,10 @@ public class AccountService {
 
     private String getEncodePassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    public void deleteAccount(String nickname) {
+        Account account = getAccountAndExistCheck(nickname);
+        accountRepository.delete(account);
     }
 }
