@@ -24,10 +24,11 @@ public class SettingController {
 	private final UpdateNicknameValidator updateNicknameValidator;
 	private final UpdatePasswordValidator updatePasswordValidator;
 
-	@InitBinder("AccountUpdateDto")
-	public void updateNicknameInitBinder(WebDataBinder webDataBinder) { webDataBinder.addValidators(updateNicknameValidator); }
+	@InitBinder("nickname")
+	public void updateNicknameInitBinder(WebDataBinder webDataBinder) {
+		webDataBinder.addValidators(updateNicknameValidator); }
 
-	@InitBinder("AccountUpdateDto")
+	@InitBinder("password")
 	public void updatePasswordInitBinder(WebDataBinder webDataBinder) { webDataBinder.addValidators(updatePasswordValidator); }
 
 	@PatchMapping("/nickname")
