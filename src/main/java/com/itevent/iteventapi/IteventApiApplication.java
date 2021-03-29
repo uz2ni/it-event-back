@@ -1,5 +1,7 @@
 package com.itevent.iteventapi;
 
+import com.itevent.iteventapi.modules.account.AccountService;
+import com.itevent.iteventapi.modules.account.dto.AccountJoinDto;
 import com.itevent.iteventapi.modules.event.EventConceptType;
 import com.itevent.iteventapi.modules.event.EventCreateType;
 import com.itevent.iteventapi.modules.event.EventService;
@@ -19,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 public class IteventApiApplication implements CommandLineRunner {
 
 	private final EventService eventService;
+	private final AccountService accountService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(IteventApiApplication.class, args);
@@ -27,6 +30,14 @@ public class IteventApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		CreateEventforTest();
+
+		CreateAccountForTest();
+	}
+
+
+	private void CreateEventforTest() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 
 		LocalDateTime eventStartDate = LocalDateTime.parse("2021-03-14 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -96,4 +107,15 @@ public class IteventApiApplication implements CommandLineRunner {
 		eventService.createEvent(eventReqDto2);
 		eventService.createEvent(eventReqDto3);
 	}
+
+	private void CreateAccountForTest() {
+		AccountJoinDto accountJoinDto = AccountJoinDto.builder()
+			.nickname("test1")
+			.email("test1@email.com")
+			.password("12345678")
+			.build();
+
+		accountService.createAccount(accountJoinDto);
+	}
+
 }
