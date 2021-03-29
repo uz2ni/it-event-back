@@ -2,7 +2,7 @@ package com.itevent.iteventapi.modules.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.itevent.iteventapi.common.CommonField;
-import com.itevent.iteventapi.config.ModelMapperUtils;
+import com.itevent.iteventapi.common.utils.ModelMapperUtils;
 import com.itevent.iteventapi.modules.event.dto.EventReqDto;
 import lombok.*;
 import javax.persistence.*;

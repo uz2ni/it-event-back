@@ -1,4 +1,4 @@
-package com.itevent.iteventapi.config;
+package com.itevent.iteventapi.common.utils;
 
 import org.modelmapper.ModelMapper;
 

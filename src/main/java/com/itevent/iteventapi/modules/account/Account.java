@@ -1,7 +1,7 @@
 package com.itevent.iteventapi.modules.account;
 
 import com.itevent.iteventapi.common.CommonField;
-import com.itevent.iteventapi.config.ModelMapperUtils;
+import com.itevent.iteventapi.common.utils.ModelMapperUtils;
 import com.itevent.iteventapi.modules.account.dto.AccountJoinDto;
 import lombok.*;
 

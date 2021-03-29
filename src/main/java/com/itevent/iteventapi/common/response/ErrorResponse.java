@@ -1,5 +1,8 @@
 package com.itevent.iteventapi.common.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import com.itevent.iteventapi.common.utils.DateFormatUtils;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,6 +15,7 @@ import java.util.Map;
 public class ErrorResponse {
 
     @Builder.Default
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateFormatUtils.DEFAULT_DATE_PATTERN, timezone = "Asia/Seoul")
     private LocalDateTime timestamp = LocalDateTime.now();
 
     private String message; //예외 메시지 저장

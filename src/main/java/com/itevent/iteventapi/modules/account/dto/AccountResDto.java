@@ -1,7 +1,7 @@
 package com.itevent.iteventapi.modules.account.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.itevent.iteventapi.config.ModelMapperUtils;
+import com.itevent.iteventapi.common.utils.ModelMapperUtils;
 import com.itevent.iteventapi.modules.account.Account;
 import lombok.Getter;
 import lombok.Setter;
