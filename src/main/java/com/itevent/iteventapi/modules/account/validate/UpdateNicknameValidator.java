@@ -23,17 +23,18 @@ public class UpdateNicknameValidator implements Validator {
 
 		AccountUpdateDto.Nickname accountUpdateDto = (AccountUpdateDto.Nickname)target;
 
-		if(isSameNickname(accountUpdateDto)) {
-			errors.rejectValue("nickname", "wrong.nickname", "수정될 닉네임을 정확히 입력해주세요.");
-		}
-
 		if(!isValidNickname(accountUpdateDto.getPrevNickname())) {
-			errors.rejectValue("nickname", "wrong.nickname", "존재하지 않는 계정입니다.");
+			errors.rejectValue("prevNickname", "wrong.prevNickname", "존재하지 않는 계정입니다.");
+		} else {
+			if(isValidNickname(accountUpdateDto.getNewNickname())) {
+				errors.rejectValue("newNickname", "wrong.newNickname", "이미 사용중인 닉네임 입니다.");
+			}
+
+			if(isSameNickname(accountUpdateDto)) {
+				errors.rejectValue("newNickname", "wrong.newNickname2", "수정될 닉네임을 정확히 입력해주세요.");
+			}
 		}
 
-		if(isValidNickname(accountUpdateDto.getNewNickname())) {
-			errors.rejectValue("nickname", "wrong.nickname", "이미 사용중인 닉네임 입니다.");
-		}
 
 	}
 
