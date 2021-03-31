@@ -21,9 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-
-
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/h2-console/**");
@@ -37,8 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 토큰으로 인증하므로 세션 필요 없음.
                 .and()
                     .authorizeRequests()
-                        .antMatchers("/", "/h2-console/**", "/events", "/events/*", "/join", "/account/*", "/settings/*").permitAll()
-                        .antMatchers("/login").hasRole("USER")
+                        .antMatchers("/", "/h2-console/**", "/events", "/events/*", "/join", "/login").permitAll()
+                        .antMatchers("/account/*", "/settings/*").hasRole("USER")
                         .anyRequest().authenticated()
                 .and()
                     .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // jwt token 필터를 id/password 인증 필터 전에 넣는다.

@@ -33,7 +33,7 @@ public class IteventApiApplication implements CommandLineRunner {
 
 		CreateEventforTest();
 
-		CreateAccountForTest();
+		//CreateAccountForTest();
 	}
 
 

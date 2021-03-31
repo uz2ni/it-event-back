@@ -1,6 +1,7 @@
 package com.itevent.iteventapi.modules.account.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.itevent.iteventapi.common.utils.ModelMapperUtils;
 import com.itevent.iteventapi.modules.account.Account;
 import lombok.Getter;
@@ -21,6 +22,9 @@ public class AccountResDto {
     private String nickname;
 
     private boolean emailVerified;
+
+    @JsonIgnore
+    private String password;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
