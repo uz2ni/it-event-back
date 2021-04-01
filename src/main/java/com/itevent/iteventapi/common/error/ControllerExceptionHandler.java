@@ -63,7 +63,7 @@ public class ControllerExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
 
         ErrorCode errorCode = e.getErrorCode();
-        String msg = e.getId() == null ? e.toString() : e.toString() + ", ID : " + e.getId();
+        String msg = e.getMessage();
 
         ErrorResponse response = ErrorResponse.builder()
                 .status(errorCode.getStatus())
@@ -81,9 +81,11 @@ public class ControllerExceptionHandler {
         System.out.println(e.getMessage());
         System.out.println(e.toString());
 
+        String msg = e.getMessage()==null ? e.toString() : e.getMessage();
+
         ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .message(e.toString())
+                .message(msg)
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

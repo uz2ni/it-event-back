@@ -10,7 +10,7 @@ public enum ErrorCode {
 
 //    INVALID_PARAMETER(400, null, "Invalid Request Data"),
 //    COUPON_EXPIRATION(410, "C001", "Coupon Was Expired"),
-    NOT_FOUND(404, "E001", "Event Not Found");
+    NOT_FOUND(404, null, "Not Found");
 
     private final int status;
     private final String code;

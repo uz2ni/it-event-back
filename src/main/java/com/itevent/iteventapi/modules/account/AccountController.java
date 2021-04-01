@@ -1,11 +1,13 @@
 package com.itevent.iteventapi.modules.account;
 
+import com.itevent.iteventapi.common.error.CustomNotFoundException;
 import com.itevent.iteventapi.common.response.JsonResponse;
 import com.itevent.iteventapi.config.security.JwtTokenProvider;
 import com.itevent.iteventapi.modules.account.dto.AccountJoinDto;
 import com.itevent.iteventapi.modules.account.dto.AccountLoginDto;
 import com.itevent.iteventapi.modules.account.dto.AccountResDto;
 import com.itevent.iteventapi.modules.account.validate.JoinValidator;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,17 +50,18 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JsonResponse> login(@RequestBody AccountLoginDto accountLoginDto) {
+    public ResponseEntity<JsonResponse> login(@RequestBody AccountLoginDto accountLoginDto) throws NotFoundException {
 
         AccountResDto accountResDto = accountService.getAccount(accountLoginDto.getEmail());
 
         // 비밀번호 일치 확인
         if(!passwordEncoder.matches(accountLoginDto.getPassword(), accountResDto.getPassword())) {
-            System.out.println("비밀번호 불일치");
+            throw new CustomNotFoundException("아이디 혹은 비밀번호가 일치하지 않습니다.");
         }
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("token", jwtTokenProvider.createToken(String.valueOf(accountResDto.getEmail()), Arrays.asList("ROLE_USER")));
+        map.put("account", accountResDto);
 
         return new ResponseEntity<>(new JsonResponse(map), HttpStatus.OK);
     }

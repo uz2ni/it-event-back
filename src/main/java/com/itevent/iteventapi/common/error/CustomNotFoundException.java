@@ -8,7 +8,7 @@ public class CustomNotFoundException extends CustomException {
         super(ErrorCode.NOT_FOUND);
     }
 
-    public CustomNotFoundException(Long id) {
-        super(id, ErrorCode.NOT_FOUND);
+    public CustomNotFoundException(String message) {
+        super(message, ErrorCode.NOT_FOUND);
     }
 }
