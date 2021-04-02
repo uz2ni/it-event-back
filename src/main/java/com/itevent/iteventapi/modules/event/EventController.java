@@ -12,6 +12,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,8 +39,8 @@ public class EventController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity<JsonResponse> addEvent(@Valid @RequestBody EventReqDto eventReqDto) {
-        EventResDto eventResDto = eventService.createEvent(eventReqDto);
+    public ResponseEntity<JsonResponse> addEvent(@Valid @RequestBody EventReqDto eventReqDto, Principal principal) {
+        EventResDto eventResDto = eventService.createEvent(eventReqDto, principal.getName());
         return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
     }
 

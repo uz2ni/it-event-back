@@ -59,7 +59,7 @@ public class AccountService implements UserDetailsService {
         account.setPassword(encodingPassword);
     }
 
-    private Account getAccountAndExistCheck(String name) {
+    public Account getAccountAndExistCheck(String name) {
         Account account = accountRepository.findByNickname(name);
         if(account == null) {
             account = accountRepository.findByEmail(name);

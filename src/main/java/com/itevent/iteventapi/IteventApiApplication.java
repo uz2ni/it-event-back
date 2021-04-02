@@ -31,9 +31,9 @@ public class IteventApiApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		CreateAccountForTest();
 		CreateEventforTest();
 
-		//CreateAccountForTest();
 	}
 
 
@@ -103,9 +103,9 @@ public class IteventApiApplication implements CommandLineRunner {
 				.onlineEnrollInfo(null)
 				.build();
 
-		eventService.createEvent(eventReqDto1);
-		eventService.createEvent(eventReqDto2);
-		eventService.createEvent(eventReqDto3);
+		eventService.createEvent(eventReqDto1, "test1@email.com");
+		eventService.createEvent(eventReqDto2, "test1@email.com");
+		eventService.createEvent(eventReqDto3, "test1@email.com");
 	}
 
 	private void CreateAccountForTest() {

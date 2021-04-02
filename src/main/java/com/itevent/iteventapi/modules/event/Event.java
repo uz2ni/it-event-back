@@ -3,6 +3,7 @@ package com.itevent.iteventapi.modules.event;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.itevent.iteventapi.common.CommonField;
 import com.itevent.iteventapi.common.utils.ModelMapperUtils;
+import com.itevent.iteventapi.modules.account.Account;
 import com.itevent.iteventapi.modules.event.dto.EventReqDto;
 import lombok.*;
 import javax.persistence.*;
@@ -22,8 +23,8 @@ public class Event extends CommonField {
     @Enumerated(EnumType.STRING)
     private EventCreateType eventCreateType;
 
-    @Column(nullable = false)
-    private Long hostId; // Todo: Account 매핑 예정
+    @ManyToOne(optional = false) // @Column(nallable=false) 와 동일
+    private Account account;
 
     @Column
     private String hostEmail;
@@ -83,5 +84,11 @@ public class Event extends CommonField {
 
     public static void of(EventReqDto eventReqDto, Event event) {
         ModelMapperUtils.getModelMapper().map(eventReqDto, event);
+    }
+
+    public static Event of(EventReqDto eventReqDto, Account account) {
+        Event event = ModelMapperUtils.getModelMapper().map(eventReqDto, Event.class);
+        event.setAccount(account);
+        return event;
     }
 }

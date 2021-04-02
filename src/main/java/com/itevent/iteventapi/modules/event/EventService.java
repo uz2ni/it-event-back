@@ -1,20 +1,16 @@
 package com.itevent.iteventapi.modules.event;
 
-import com.itevent.iteventapi.common.error.CustomNotFoundException;
+import com.itevent.iteventapi.modules.account.Account;
+import com.itevent.iteventapi.modules.account.AccountRepository;
+import com.itevent.iteventapi.modules.account.AccountService;
 import com.itevent.iteventapi.modules.event.dto.EventListResDto;
 import com.itevent.iteventapi.modules.event.dto.EventReqDto;
 import com.itevent.iteventapi.modules.event.dto.EventResDto;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,10 +18,11 @@ import java.util.Optional;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final AccountService accountService;
 
     public EventResDto getEvent(Long id) {
         Event event = getEventAndExistCheck(id);
-        return new EventResDto(event);
+        return EventResDto.of(event);
     }
 
     public EventListResDto getEventAll() {
@@ -34,12 +31,12 @@ public class EventService {
         return new EventListResDto(events);
     }
 
-    public EventResDto createEvent(EventReqDto eventReqDto) {
-        Event event = Event.of(eventReqDto);
-        event.setHostId(1L);
-        Event newEvent = eventRepository.save(event);
+    public EventResDto createEvent(EventReqDto eventReqDto, String email) {
+        Account account = accountService.getAccountAndExistCheck(email);
+        Event event = Event.of(eventReqDto, account);
+        event = eventRepository.save(event);
 
-        return new EventResDto(newEvent);
+        return EventResDto.of(event);
     }
 
     public EventResDto updateEvent(Long id, EventReqDto eventReqDto) {
@@ -47,7 +44,7 @@ public class EventService {
         Event.of(eventReqDto, event);
         System.out.println(event.toString());
 
-        return new EventResDto(event);
+        return EventResDto.of(event);
     }
 
     public void deleteEvent(Long id) {

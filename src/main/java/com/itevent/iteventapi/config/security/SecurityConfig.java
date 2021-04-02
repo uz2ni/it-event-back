@@ -3,6 +3,7 @@ package com.itevent.iteventapi.config.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -34,9 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 토큰으로 인증하므로 세션 필요 없음.
                 .and()
                     .authorizeRequests()
-                        .antMatchers("/", "/h2-console/**", "/events", "/events/*", "/join", "/login").permitAll()
-                        .antMatchers("/account/*", "/settings/*").hasRole("USER")
-                        .anyRequest().authenticated()
+                        .antMatchers("/", "/h2-console/**", "/join", "/login").permitAll()
+                        .antMatchers(HttpMethod.GET, "/events/*").permitAll()
+                        //.antMatchers("/account/*", "/settings/*").hasRole("USER")
+                        .anyRequest().hasRole("USER")
                 .and()
                     .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // jwt token 필터를 id/password 인증 필터 전에 넣는다.
     }
