@@ -1,7 +1,8 @@
 package com.itevent.iteventapi.config.security;
 
+import com.itevent.iteventapi.common.error.security.CustomAccessDeniedHandler;
+import com.itevent.iteventapi.common.error.security.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,9 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                         .antMatchers("/", "/h2-console/**", "/join", "/login").permitAll()
-                        .antMatchers(HttpMethod.GET, "/events/*").permitAll()
+                        .antMatchers(HttpMethod.GET, "/events/*", "/exception/*").permitAll()
                         //.antMatchers("/account/*", "/settings/*").hasRole("USER")
                         .anyRequest().hasRole("USER")
+                .and()
+                    .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+                .and()
+                    .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
                     .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // jwt token 필터를 id/password 인증 필터 전에 넣는다.
     }

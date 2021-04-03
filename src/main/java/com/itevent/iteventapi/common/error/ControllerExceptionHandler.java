@@ -63,7 +63,7 @@ public class ControllerExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
 
         ErrorCode errorCode = e.getErrorCode();
-        String msg = e.getMessage();
+        String msg = e.getMessage() == null ? errorCode.getMessage() : e.getMessage();
 
         ErrorResponse response = ErrorResponse.builder()
                 .status(errorCode.getStatus())
