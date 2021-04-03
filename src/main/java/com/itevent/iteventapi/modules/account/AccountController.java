@@ -9,6 +9,7 @@ import com.itevent.iteventapi.modules.account.dto.AccountResDto;
 import com.itevent.iteventapi.modules.account.validate.JoinValidator;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +23,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/account")
 public class AccountController {
 
     private final AccountService accountService;
@@ -41,7 +43,7 @@ public class AccountController {
         return new ResponseEntity<>(new JsonResponse(accountResDto), HttpStatus.OK);
     }
 
-    @GetMapping("/account/{nickname}")
+    @GetMapping("/{nickname}")
     public ResponseEntity<JsonResponse> getAccount(@PathVariable String nickname) {
         AccountResDto accountResDto = accountService.getAccount(nickname);
         Map<String, AccountResDto> map = new HashMap<>();
@@ -64,6 +66,12 @@ public class AccountController {
         map.put("account", accountResDto);
 
         return new ResponseEntity<>(new JsonResponse(map), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/logout")
+    public ResponseEntity<JsonResponse> logout() {
+        // TODO: 토큰 무효처리
+        return new ResponseEntity<>(new JsonResponse(), HttpStatus.OK);
     }
 
 }

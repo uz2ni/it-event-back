@@ -7,13 +7,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Data
 public class EventListResDto {
 
-    List<Event> events;
+    private List<EventResDto> events;
 
     public EventListResDto(List<Event> list) {
-        events = list;
+        List<EventResDto> events = list.stream()
+                .map(event -> EventResDto.of(event))
+                .collect(Collectors.toList());
+
+        this.events = events;
     }
+
 }
