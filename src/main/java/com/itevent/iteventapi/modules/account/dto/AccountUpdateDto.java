@@ -12,7 +12,7 @@ public class AccountUpdateDto {
 	@Setter
 	public static class Nickname {
 
-		private String prevNickname;
+		//private String prevNickname;
 
 		@NotBlank
 		@Length(min = 3, max = 20)

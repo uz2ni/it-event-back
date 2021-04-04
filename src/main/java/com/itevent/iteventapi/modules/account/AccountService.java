@@ -42,10 +42,9 @@ public class AccountService implements UserDetailsService {
         return AccountResDto.of(account);
     }
 
-    public AccountResDto updateNickname(AccountUpdateDto.Nickname accountUpdateDto) {
-        Account account = getAccountAndExistCheck(accountUpdateDto.getPrevNickname());
+    public AccountResDto updateNickname(Account account, AccountUpdateDto.Nickname accountUpdateDto) {
         account.setNickname(accountUpdateDto.getNewNickname());
-
+        accountRepository.save(account); // account는 Principal 객체로 받아온 상태라 persist 상태가 아님. save해야 업데이트 된다.
         return AccountResDto.of(account);
     }
 

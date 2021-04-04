@@ -8,10 +8,12 @@ import com.itevent.iteventapi.modules.account.validate.UpdatePasswordValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,15 +27,14 @@ public class SettingController {
 	private final UpdatePasswordValidator updatePasswordValidator;
 
 	@InitBinder("nickname")
-	public void updateNicknameInitBinder(WebDataBinder webDataBinder) {
-		webDataBinder.addValidators(updateNicknameValidator); }
+	public void updateNicknameInitBinder(WebDataBinder webDataBinder) { webDataBinder.addValidators(updateNicknameValidator); }
 
 	@InitBinder("password")
 	public void updatePasswordInitBinder(WebDataBinder webDataBinder) { webDataBinder.addValidators(updatePasswordValidator); }
 
 	@PatchMapping("/nickname")
-	public ResponseEntity<JsonResponse> updateNickname(@Valid @RequestBody AccountUpdateDto.Nickname accountUpdateDto) {
-		AccountResDto accountResDto = accountService.updateNickname(accountUpdateDto);
+	public ResponseEntity<JsonResponse> updateNickname(@CurrentAccount Account account, @Valid @RequestBody AccountUpdateDto.Nickname accountUpdateDto) {
+		AccountResDto accountResDto = accountService.updateNickname(account, accountUpdateDto);
 		Map<String, AccountResDto> map = new HashMap<>();
 		map.put("account", accountResDto);
 		return new ResponseEntity<JsonResponse>(new JsonResponse(map), HttpStatus.OK);
