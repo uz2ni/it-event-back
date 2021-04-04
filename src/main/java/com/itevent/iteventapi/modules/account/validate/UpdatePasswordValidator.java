@@ -26,26 +26,9 @@ public class UpdatePasswordValidator implements Validator {
 
 		AccountUpdateDto.Password accountUpdateDto = (AccountUpdateDto.Password)target;
 
-		if(!isValidNickname(accountUpdateDto.getNickname())) {
-			errors.rejectValue("nickname", "wrong.nickname", "존재하지 않는 계정입니다.");
-		} else {
-			if(!isValidPrevPassword(accountUpdateDto)) {
-				errors.rejectValue("password", "wrong.password", "현재 패스워드가 일치하지 않습니다.");
-			}
-
-			if(!isMatchPassword(accountUpdateDto)) {
-				errors.rejectValue("newPassword", "wrong.newPassword", "입력한 새 패스워드가 일치하지 않습니다.");
-			}
+		if (!isMatchPassword(accountUpdateDto)) {
+			errors.rejectValue("newPassword", "wrong.newPassword", "입력한 새 패스워드가 일치하지 않습니다.");
 		}
-
-	}
-
-
-	private boolean isValidNickname(String field) { return accountRepository.existsByNickname(field); }
-
-	private boolean isValidPrevPassword(AccountUpdateDto.Password accountUpdateDto) {
-		Account account = accountRepository.findByNickname(accountUpdateDto.getNickname());
-		return passwordEncoder.matches(accountUpdateDto.getPassword(), account.getPassword());
 	}
 
 	private boolean isMatchPassword(AccountUpdateDto.Password accountUpdateDto) {

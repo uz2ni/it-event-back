@@ -1,8 +1,6 @@
 package com.itevent.iteventapi.modules.account;
 
-import com.itevent.iteventapi.config.security.JwtTokenProvider;
 import com.itevent.iteventapi.modules.account.dto.AccountJoinDto;
-import com.itevent.iteventapi.modules.account.dto.AccountLoginDto;
 import com.itevent.iteventapi.modules.account.dto.AccountResDto;
 import com.itevent.iteventapi.modules.account.dto.AccountUpdateDto;
 import lombok.RequiredArgsConstructor;
@@ -48,10 +46,19 @@ public class AccountService implements UserDetailsService {
         return AccountResDto.of(account);
     }
 
-    public void updatePassword(AccountUpdateDto.Password accountUpdateDto) {
-        Account account = getAccountAndExistCheck(accountUpdateDto.getNickname());
+    public void updatePassword(Account account, AccountUpdateDto.Password accountUpdateDto) {
+        // 현재 패스워드가 일치하는지 확인
+        prevPasswordValidCheck(account.getPassword(), accountUpdateDto.getPassword());
+
         String encodingPassword = getEncodePassword(accountUpdateDto.getNewPassword());
         account.setPassword(encodingPassword);
+        accountRepository.save(account);
+    }
+
+    private void prevPasswordValidCheck(String prevPassword, String newPassword) {
+        if(!passwordEncoder.matches(newPassword, prevPassword)) {
+            throw new IllegalArgumentException("현재 패스워드가 일치하지 않습니다.");
+        }
     }
 
     public Account getAccountAndExistCheck(String name) {
@@ -68,8 +75,7 @@ public class AccountService implements UserDetailsService {
         return passwordEncoder.encode(password);
     }
 
-    public void deleteAccount(String nickname) {
-        Account account = getAccountAndExistCheck(nickname);
+    public void deleteAccount(Account account) {
         accountRepository.delete(account);
     }
 

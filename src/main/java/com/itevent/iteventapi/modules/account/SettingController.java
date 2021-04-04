@@ -41,14 +41,14 @@ public class SettingController {
 	}
 
 	@PatchMapping("/password")
-	public ResponseEntity<JsonResponse> updatePassword(@Valid @RequestBody AccountUpdateDto.Password accountUpdateDto) {
-		accountService.updatePassword(accountUpdateDto);
+	public ResponseEntity<JsonResponse> updatePassword(@CurrentAccount Account account, @Valid @RequestBody AccountUpdateDto.Password accountUpdateDto) {
+		accountService.updatePassword(account, accountUpdateDto);
 		return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{nickname}")
-	public ResponseEntity<JsonResponse> deleteAccount(@PathVariable String nickname) {
-		accountService.deleteAccount(nickname);
+	@DeleteMapping("/delete")
+	public ResponseEntity<JsonResponse> deleteAccount(@CurrentAccount Account account) {
+		accountService.deleteAccount(account);
 		return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
 	}
 

@@ -12,8 +12,6 @@ public class AccountUpdateDto {
 	@Setter
 	public static class Nickname {
 
-		//private String prevNickname;
-
 		@NotBlank
 		@Length(min = 3, max = 20)
 		@Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9_-]{3,20}$")
@@ -24,8 +22,6 @@ public class AccountUpdateDto {
 	@Getter
 	@Setter
 	public static class Password {
-
-		private String nickname;
 
 		@NotBlank
 		@Length(min = 8, max = 20)
