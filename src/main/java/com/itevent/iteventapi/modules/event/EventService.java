@@ -1,7 +1,6 @@
 package com.itevent.iteventapi.modules.event;
 
 import com.itevent.iteventapi.modules.account.Account;
-import com.itevent.iteventapi.modules.account.AccountRepository;
 import com.itevent.iteventapi.modules.account.AccountService;
 import com.itevent.iteventapi.modules.event.dto.EventListResDto;
 import com.itevent.iteventapi.modules.event.dto.EventReqDto;
@@ -19,6 +18,7 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final AccountService accountService;
+    private final EnrollmentRepository enrollmentRepository;
 
     public EventResDto getEvent(Long id) {
         Event event = getEventAndExistCheck(id);
@@ -58,6 +58,15 @@ public class EventService {
             throw new IllegalArgumentException("요청한 이벤트가 없습니다. [id : " + id + "]");
         }
         return event;
+    }
+
+    public void newEnrollment(Account account, Event event) {
+        if(enrollmentRepository.existsByEventAndAccount(event, account)) {
+            throw new IllegalArgumentException("이미 참가 신청된 계정입니다.");
+        }
+        Enrollment enrollment = Enrollment.builder().account(account).build();
+        enrollmentRepository.save(enrollment);
+        event.addEnrollment(enrollment);
     }
 
 }

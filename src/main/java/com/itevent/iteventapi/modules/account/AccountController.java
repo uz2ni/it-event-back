@@ -52,7 +52,7 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JsonResponse> login(@RequestBody AccountLoginDto accountLoginDto) throws NotFoundException {
+    public ResponseEntity<JsonResponse> login(@RequestBody AccountLoginDto accountLoginDto) {
 
         AccountResDto accountResDto = accountService.getAccount(accountLoginDto.getEmail());
 

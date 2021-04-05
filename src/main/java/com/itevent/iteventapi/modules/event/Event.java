@@ -8,6 +8,8 @@ import com.itevent.iteventapi.modules.event.dto.EventReqDto;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,7 +18,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of = "id")
 public class Event extends CommonField {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     @Column(nullable = false)
@@ -78,6 +81,10 @@ public class Event extends CommonField {
     @Column
     private String onlineEnrollInfo;
 
+    @OneToMany(mappedBy = "event")
+    @OrderBy("createdDate")
+    private List<Enrollment> enrollments = new ArrayList<>();
+
     public static Event of(EventReqDto eventReqDto) {
         return ModelMapperUtils.getModelMapper().map(eventReqDto, Event.class);
     }
@@ -91,4 +98,10 @@ public class Event extends CommonField {
         event.setAccount(account);
         return event;
     }
+
+    public void addEnrollment(Enrollment enrollment) {
+        this.enrollments.add(enrollment);
+        enrollment.setEvent(this);
+    }
+
 }

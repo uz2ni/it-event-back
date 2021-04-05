@@ -1,6 +1,8 @@
 package com.itevent.iteventapi.modules.event;
 
 import com.itevent.iteventapi.common.response.JsonResponse;
+import com.itevent.iteventapi.modules.account.Account;
+import com.itevent.iteventapi.modules.account.CurrentAccount;
 import com.itevent.iteventapi.modules.event.dto.EventListResDto;
 import com.itevent.iteventapi.modules.event.dto.EventReqDto;
 import com.itevent.iteventapi.modules.event.dto.EventResDto;
@@ -53,6 +55,13 @@ public class EventController {
     @DeleteMapping("/events/{id}")
     public ResponseEntity<JsonResponse> deleteEvent(@PathVariable Long id) {
         eventService.deleteEvent(id);
+        return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
+    }
+
+    // 참가 신청
+    @PostMapping("/events/{id}/enroll")
+    public ResponseEntity<JsonResponse> addEnrollment(@CurrentAccount Account account, @PathVariable("id") Event event) {
+        eventService.newEnrollment(account, event);
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
 
