@@ -69,4 +69,29 @@ public class EventService {
         event.addEnrollment(enrollment);
     }
 
+    public void cancelEnrollment(Account account, Event event) {
+        Enrollment enrollment = getEnrollmentAndExistCheck(account, event);
+        event.getEnrollments().remove(enrollment);
+        enrollmentRepository.delete(enrollment);
+    }
+
+    public void acceptEnrollment(Account host, Event event, Boolean accepted, Account attendee) {
+        isHostCheck(host, event);
+        Enrollment enrollment = getEnrollmentAndExistCheck(attendee, event);
+        enrollment.setAccepted(accepted);
+    }
+
+    public void isHostCheck(Account account, Event event) {
+        if(event.getAccount().getId() != account.getId()) {
+            throw new IllegalArgumentException("행사 관계자가 아닙니다.");
+        }
+    }
+
+    private Enrollment getEnrollmentAndExistCheck(Account account, Event event) {
+        Enrollment enrollment = enrollmentRepository.findByEventAndAccount(event, account);
+        if(enrollment == null) {
+            throw new IllegalArgumentException("참가 계정이 존재하지 않습니다.");
+        }
+        return enrollment;
+    }
 }

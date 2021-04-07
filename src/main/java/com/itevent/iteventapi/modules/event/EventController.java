@@ -59,10 +59,31 @@ public class EventController {
     }
 
     // 참가 신청
-    @PostMapping("/events/{id}/enroll")
+    @PostMapping("/events/{id}/attend")
     public ResponseEntity<JsonResponse> addEnrollment(@CurrentAccount Account account, @PathVariable("id") Event event) {
         eventService.newEnrollment(account, event);
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/events/{id}/cancel")
+    public ResponseEntity<JsonResponse> cancelEnrollment(@CurrentAccount Account account, @PathVariable("id") Event event) {
+        eventService.cancelEnrollment(account, event);
+        return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
+    }
+
+    //TODO: 참가허락(주최자)
+
+    @PostMapping("/events/{id}/accept")
+    public ResponseEntity<JsonResponse> acceptEnrollment(@CurrentAccount Account account, @PathVariable("id") Event event, @RequestParam Boolean accepted, @RequestParam("attendeeId") Account attendee) {
+        eventService.acceptEnrollment(account, event, accepted, attendee);
+        return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
+    }
+    //TODO: 참석체크(참여자)
+//    @PostMapping("/events/{id}/attend")
+//    public ResponseEntity<JsonResponse> acceptEnrollment(@CurrentAccount Account account, @PathVariable("id") Event event) {
+//        eventService.newEnrollment(account, event);
+//        return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
+//    }
+
 
 }
