@@ -104,4 +104,10 @@ public class Event extends CommonField {
         enrollment.setEvent(this);
     }
 
+    public void isHostCheck(Account account) {
+        if(this.getAccount().getId() != account.getId()) {
+            throw new IllegalArgumentException("행사 관계자가 아닙니다.");
+        }
+    }
+
 }
