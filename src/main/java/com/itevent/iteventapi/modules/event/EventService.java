@@ -75,7 +75,7 @@ public class EventService {
         enrollmentRepository.delete(enrollment);
     }
 
-    public void acceptEnrollment(Account host, Event event, Boolean accepted, Account attendee) {
+    public void acceptEnrollment(Account host, Event event, boolean accepted, Account attendee) {
         event.isHostCheck(host);
         Enrollment enrollment = getEnrollmentAndExistCheck(attendee, event);
         enrollment.setAccepted(accepted);
@@ -87,5 +87,11 @@ public class EventService {
             throw new IllegalArgumentException("참가 정보가 존재하지 않습니다.");
         }
         return enrollment;
+    }
+
+    public void attendEnrollment(Account account, Event event, boolean attended) {
+        Enrollment enrollment = getEnrollmentAndExistCheck(account, event);
+        enrollment.checkAccepted();
+        enrollment.checkEventDateAndAttend(attended);
     }
 }

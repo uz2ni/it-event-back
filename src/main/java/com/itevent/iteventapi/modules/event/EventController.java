@@ -2,7 +2,9 @@ package com.itevent.iteventapi.modules.event;
 
 import com.itevent.iteventapi.common.response.JsonResponse;
 import com.itevent.iteventapi.modules.account.Account;
+import com.itevent.iteventapi.modules.account.AccountService;
 import com.itevent.iteventapi.modules.account.CurrentAccount;
+import com.itevent.iteventapi.modules.event.dto.EnrollReqDto;
 import com.itevent.iteventapi.modules.event.dto.EventListResDto;
 import com.itevent.iteventapi.modules.event.dto.EventReqDto;
 import com.itevent.iteventapi.modules.event.dto.EventResDto;
@@ -22,6 +24,7 @@ public class EventController {
 
     private final EventService eventService;
     private final EventValidator eventValidator;
+    private final AccountService accountService;
 
     @InitBinder("eventReqDto")
     public void initBinder(WebDataBinder webDataBinder) {
@@ -71,19 +74,20 @@ public class EventController {
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
 
-    //TODO: 참가허락(주최자)
-
+    // 참가 허락 (주최자)
     @PostMapping("/events/{id}/accept")
-    public ResponseEntity<JsonResponse> acceptEnrollment(@CurrentAccount Account account, @PathVariable("id") Event event, @RequestParam Boolean accepted, @RequestParam("attendeeId") Account attendee) {
-        eventService.acceptEnrollment(account, event, accepted, attendee);
+    public ResponseEntity<JsonResponse> acceptEnrollment(@CurrentAccount Account account, @PathVariable("id") Event event, @RequestBody EnrollReqDto.Accept request) {
+        Account attendee = accountService.getAccountAndExistCheck(request.getAttendeeName());
+        eventService.acceptEnrollment(account, event, request.isAccepted(), attendee);
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
-    //TODO: 참석체크(참여자)
-//    @PostMapping("/events/{id}/attend")
-//    public ResponseEntity<JsonResponse> acceptEnrollment(@CurrentAccount Account account, @PathVariable("id") Event event) {
-//        eventService.newEnrollment(account, event);
-//        return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
-//    }
+
+    //참석 체크 (참가자)
+    @PostMapping("/events/{id}/attend-check")
+    public ResponseEntity<JsonResponse> attendEnrollment(@CurrentAccount Account account, @PathVariable("id") Event event, @RequestBody EnrollReqDto.Attend request) {
+        eventService.attendEnrollment(account, event, request.isAttended());
+        return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
+    }
 
 
 }
