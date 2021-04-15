@@ -31,8 +31,8 @@ public class IteventApiApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		CreateAccountForTest();
-		CreateEventforTest();
+//		CreateAccountForTest();
+//		CreateEventforTest();
 
 	}
 
