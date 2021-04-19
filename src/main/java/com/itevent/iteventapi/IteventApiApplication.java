@@ -1,5 +1,7 @@
 package com.itevent.iteventapi;
 
+import com.itevent.iteventapi.crawler.*;
+import com.itevent.iteventapi.crawler.shop.mrStreetCrawler;
 import com.itevent.iteventapi.modules.account.AccountService;
 import com.itevent.iteventapi.modules.account.dto.AccountJoinDto;
 import com.itevent.iteventapi.modules.event.EventConceptType;
@@ -12,8 +14,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @EnableJpaAuditing
 @SpringBootApplication
@@ -22,6 +26,8 @@ public class IteventApiApplication implements CommandLineRunner {
 
 	private final EventService eventService;
 	private final AccountService accountService;
+	private final ShopRepository shopRepository;
+	private final ProductRepository productRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(IteventApiApplication.class, args);
@@ -33,6 +39,22 @@ public class IteventApiApplication implements CommandLineRunner {
 
 //		CreateAccountForTest();
 //		CreateEventforTest();
+
+		CrawlerTest();
+
+	}
+
+	private void CrawlerTest() throws IOException {
+		// 쇼핑몰 생성
+		Shop shop = Shop.builder().shopName("미스터스트리트").siteUrl("https://mr-s.co.kr/").build();
+		shopRepository.save(shop);
+
+		// 최신 상품 목록 크롤링
+		Crawler crawler = new mrStreetCrawler(shop.getSiteUrl());
+		List<Product> products = crawler.run();
+
+		// DB 적재
+		productRepository.saveAll(products);
 
 	}
 
