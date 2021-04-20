@@ -47,11 +47,14 @@ public class IteventApiApplication implements CommandLineRunner {
 	private void CrawlerTest() throws IOException {
 		// 쇼핑몰 생성
 		Shop shop = Shop.builder().shopName("미스터스트리트").siteUrl("https://mr-s.co.kr/").build();
-		shopRepository.save(shop);
+		shop = shopRepository.save(shop);
 
 		// 최신 상품 목록 크롤링
 		Crawler crawler = new mrStreetCrawler(shop.getSiteUrl());
 		List<Product> products = crawler.run();
+		
+		// 연관관계 설정
+		//for(Product product : products) { shop.addProduct(product); }
 
 		// DB 적재
 		productRepository.saveAll(products);
