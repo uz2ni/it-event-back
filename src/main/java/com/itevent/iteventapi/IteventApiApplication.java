@@ -14,6 +14,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -47,17 +48,22 @@ public class IteventApiApplication implements CommandLineRunner {
 	private void CrawlerTest() throws IOException {
 		// 쇼핑몰 생성
 		Shop shop = Shop.builder().shopName("미스터스트리트").siteUrl("https://mr-s.co.kr/").build();
-		shop = shopRepository.save(shop);
+		shopRepository.save(shop);
+
+		Shop newshop = shopRepository.findByShopName(shop.getShopName());
 
 		// 최신 상품 목록 크롤링
 		Crawler crawler = new mrStreetCrawler(shop.getSiteUrl());
 		List<Product> products = crawler.run();
-		
+
 		// 연관관계 설정
-		//for(Product product : products) { shop.addProduct(product); }
+		for(Product product : products) {
+			product = productRepository.save(product);
+			newshop.addProduct(product);
+		}
 
 		// DB 적재
-		productRepository.saveAll(products);
+		//productRepository.saveAll(products);
 
 	}
 
