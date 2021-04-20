@@ -26,4 +26,9 @@ public class Shop extends CommonField {
     @OneToMany(mappedBy = "shop")
     @OrderBy("createdDate")
     private List<Product> products = new ArrayList<>();
+
+    public void addProduct(Product product) {
+        this.products.add(product);
+        product.setShop(this);
+    }
 }
