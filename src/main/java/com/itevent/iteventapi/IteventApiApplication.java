@@ -41,7 +41,7 @@ public class IteventApiApplication implements CommandLineRunner {
 //		CreateAccountForTest();
 //		CreateEventforTest();
 
-		CrawlerTest();
+		//CrawlerTest();
 
 	}
 
