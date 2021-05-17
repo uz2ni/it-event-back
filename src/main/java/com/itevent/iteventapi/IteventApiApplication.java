@@ -41,7 +41,7 @@ public class IteventApiApplication implements CommandLineRunner {
 //		CreateAccountForTest();
 //		CreateEventforTest();
 
-		//CrawlerTest();
+		CrawlerTest();
 
 	}
 
@@ -50,8 +50,6 @@ public class IteventApiApplication implements CommandLineRunner {
 		Shop shop = Shop.builder().shopName("미스터스트리트").siteUrl("https://mr-s.co.kr/").build();
 		shopRepository.save(shop);
 
-		Shop newshop = shopRepository.findByShopName(shop.getShopName());
-
 		// 최신 상품 목록 크롤링
 		Crawler crawler = new mrStreetCrawler(shop.getSiteUrl());
 		List<Product> products = crawler.run();
@@ -59,11 +57,11 @@ public class IteventApiApplication implements CommandLineRunner {
 		// 연관관계 설정
 		for(Product product : products) {
 			product = productRepository.save(product);
-			newshop.addProduct(product);
+			shop.addProduct(product);
 		}
 
 		// DB 적재
-		//productRepository.saveAll(products);
+		productRepository.saveAll(products);
 
 	}
 

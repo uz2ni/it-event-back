@@ -25,6 +25,7 @@ public class Shop extends CommonField {
 
     @OneToMany(mappedBy = "shop")
     @OrderBy("createdDate")
+    @Builder.Default
     private List<Product> products = new ArrayList<>();
 
     public void addProduct(Product product) {
