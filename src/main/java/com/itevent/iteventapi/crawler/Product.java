@@ -25,6 +25,8 @@ public class Product extends CommonField {
 
     private String price;
 
+    private String salePrice;
+
     private String thumbUrl;
 
     private String detailUrl;

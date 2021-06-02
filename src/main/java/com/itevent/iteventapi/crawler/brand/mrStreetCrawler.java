@@ -1,4 +1,4 @@
-package com.itevent.iteventapi.crawler.shop;
+package com.itevent.iteventapi.crawler.brand;
 
 import com.itevent.iteventapi.crawler.Crawler;
 import com.itevent.iteventapi.crawler.Product;
