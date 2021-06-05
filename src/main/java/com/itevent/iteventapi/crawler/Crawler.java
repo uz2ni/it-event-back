@@ -4,10 +4,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -30,6 +29,13 @@ abstract public class Crawler {
 
 	protected abstract Elements getItems(Document doc);
 
-	protected abstract List<Product> parseData(Elements items);
+	private List<Product> parseData(Elements items) {
+		List<Product> list = new ArrayList<>();
+		for(Element item : items) {
+			list.add(parseItem(item));
+		}
+		return list;
+	}
 
+	protected abstract Product parseItem(Element item);
 }

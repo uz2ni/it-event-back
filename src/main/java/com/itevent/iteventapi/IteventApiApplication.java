@@ -2,7 +2,6 @@ package com.itevent.iteventapi;
 
 import com.itevent.iteventapi.crawler.*;
 import com.itevent.iteventapi.crawler.brand.PapaRecipeCrawler;
-import com.itevent.iteventapi.crawler.brand.mrStreetCrawler;
 import com.itevent.iteventapi.modules.account.AccountService;
 import com.itevent.iteventapi.modules.account.dto.AccountJoinDto;
 import com.itevent.iteventapi.modules.event.EventConceptType;
