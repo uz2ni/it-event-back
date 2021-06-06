@@ -1,5 +1,6 @@
 package com.itevent.iteventapi.crawler;
 
+import com.itevent.iteventapi.modules.shop.Product;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

@@ -1,13 +1,10 @@
 package com.itevent.iteventapi.crawler.brand;
 
 import com.itevent.iteventapi.crawler.Crawler;
-import com.itevent.iteventapi.crawler.Product;
+import com.itevent.iteventapi.modules.shop.Product;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class mrStreetCrawler extends Crawler {
 

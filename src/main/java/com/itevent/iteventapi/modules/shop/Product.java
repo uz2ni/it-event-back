@@ -1,4 +1,4 @@
-package com.itevent.iteventapi.crawler;
+package com.itevent.iteventapi.modules.shop;
 
 import com.itevent.iteventapi.common.CommonField;
 import lombok.*;
