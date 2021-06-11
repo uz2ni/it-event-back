@@ -21,7 +21,7 @@ public class ShopService {
         return new ProductListResDto(products);
     }
 
-    private Shop getShopAndExistCheck(Long id) {
+    public Shop getShopAndExistCheck(Long id) {
         Shop shop = shopRepository.findById(id).orElse(null);
         if(shop == null) {
             throw new IllegalArgumentException("요청한 브랜드가 존재하지 않습니다. [id : " + id + "]");
