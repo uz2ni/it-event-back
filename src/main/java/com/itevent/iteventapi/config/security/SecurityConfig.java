@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 토큰으로 인증하므로 세션 필요 없음.
                 .and()
                     .authorizeRequests()
-                        .antMatchers("/", "/h2-console/**", "/account/join", "/account/login").permitAll()
+                        .antMatchers("/", "/h2-console/**", "/account/join", "/account/login", "/price-banner", "/price-banner/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/account/*", "/events", "/events/*", "/exception/*", "/shop/**").permitAll()
                         .anyRequest().hasRole("USER")
                 .and()

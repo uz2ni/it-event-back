@@ -23,4 +23,17 @@ public class PriceBannerService {
         PriceBanner priceBanner = PriceBanner.of(reqDto, shop);
         priceBannerRepository.save(priceBanner);
     }
+
+    public PriceBannerResDto getBanner(Long id) {
+        PriceBanner priceBanner = getPriceBannerAndExistCheck(id);
+        return PriceBannerResDto.of(priceBanner);
+    }
+
+    private PriceBanner getPriceBannerAndExistCheck(Long id) {
+        PriceBanner priceBanner = priceBannerRepository.findById(id).orElse(null);
+        if(priceBanner == null) {
+            throw new IllegalArgumentException("요청한 브랜드가 존재하지 않습니다. [id : " + id + "]");
+        }
+        return priceBanner;
+    }
 }

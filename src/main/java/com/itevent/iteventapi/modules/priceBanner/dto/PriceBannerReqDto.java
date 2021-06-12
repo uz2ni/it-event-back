@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class PriceBannerReqDto {
 
-    @NotNull(message = "브랜드가 존재하지 않습니다.")
+    @NotNull(message = "shopID를 입력해주세요.")
     private Long shopId;
 
     @NotBlank
