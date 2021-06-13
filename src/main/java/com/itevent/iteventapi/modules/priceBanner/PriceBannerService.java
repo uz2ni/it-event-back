@@ -1,14 +1,15 @@
 package com.itevent.iteventapi.modules.priceBanner;
 
+import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerListResDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerReqDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerResDto;
 import com.itevent.iteventapi.modules.shop.Shop;
 import com.itevent.iteventapi.modules.shop.ShopService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.Store;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -35,5 +36,16 @@ public class PriceBannerService {
             throw new IllegalArgumentException("요청한 브랜드가 존재하지 않습니다. [id : " + id + "]");
         }
         return priceBanner;
+    }
+
+    public PriceBannerListResDto getBannerAll() {
+        List<PriceBanner> priceBanners = priceBannerRepository.findAll();
+
+        return new PriceBannerListResDto((priceBanners));
+    }
+
+    public void updateBanner(Long id, PriceBannerReqDto priceBannerDto) {
+        PriceBanner priceBanner = getPriceBannerAndExistCheck(id);
+        PriceBanner.of(priceBannerDto, priceBanner);
     }
 }

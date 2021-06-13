@@ -40,8 +40,7 @@ public class EventController {
     @GetMapping("/events")
     public ResponseEntity<JsonResponse> getEventAll() {
         EventListResDto eventResDto = eventService.getEventAll();
-        return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);
-    }
+        return new ResponseEntity<JsonResponse>(new JsonResponse(eventResDto), HttpStatus.OK);    }
 
     @PostMapping("/events")
     public ResponseEntity<JsonResponse> addEvent(@Valid @RequestBody EventReqDto eventReqDto, Principal principal) {

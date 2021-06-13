@@ -5,6 +5,7 @@ import com.itevent.iteventapi.common.utils.ModelMapperUtils;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerReqDto;
 import com.itevent.iteventapi.modules.shop.Shop;
 import lombok.*;
+import org.modelmapper.PropertyMap;
 
 import javax.persistence.*;
 
@@ -37,4 +38,14 @@ public class PriceBanner extends CommonField {
         priceBanner.setShop(shop);
         return priceBanner;
     }
+
+    public static void of(PriceBannerReqDto reqDto, PriceBanner priceBanner) {
+        ModelMapperUtils.getModelMapper().addMappings(new PropertyMap<PriceBannerReqDto, PriceBanner>() {
+            @Override
+            protected void configure() {
+                skip(destination.getId());
+            }
+        }).map(reqDto, priceBanner);
+    }
+
 }

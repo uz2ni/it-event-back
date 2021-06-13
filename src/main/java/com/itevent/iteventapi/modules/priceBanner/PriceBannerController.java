@@ -1,6 +1,9 @@
 package com.itevent.iteventapi.modules.priceBanner;
 
 import com.itevent.iteventapi.common.response.JsonResponse;
+import com.itevent.iteventapi.modules.event.dto.EventReqDto;
+import com.itevent.iteventapi.modules.event.dto.EventResDto;
+import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerListResDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerReqDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerResDto;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,18 @@ public class PriceBannerController {
     public ResponseEntity<JsonResponse> getPriceBanner(@PathVariable Long id) {
         PriceBannerResDto priceBannerResDto = priceBannerService.getBanner(id);
         return new ResponseEntity<JsonResponse>(new JsonResponse(priceBannerResDto), HttpStatus.OK);
+    }
+
+    @GetMapping("/price-banner")
+    public ResponseEntity<JsonResponse> getPriceBannerAll() {
+        PriceBannerListResDto priceBannerResDto = priceBannerService.getBannerAll();
+        return new ResponseEntity<JsonResponse>(new JsonResponse(priceBannerResDto), HttpStatus.OK);
+    }
+
+    @PatchMapping("/price-banner/{id}")
+    public ResponseEntity<JsonResponse> updatePriceBanner(@PathVariable Long id, @Valid @RequestBody PriceBannerReqDto priceBannerDto) {
+        priceBannerService.updateBanner(id, priceBannerDto);
+        return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
 
 }
