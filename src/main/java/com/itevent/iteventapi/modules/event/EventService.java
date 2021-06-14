@@ -48,7 +48,7 @@ public class EventService {
     }
 
     public void deleteEvent(Long id) {
-        Event event = getEventAndExistCheck(id);
+        getEventAndExistCheck(id);
         eventRepository.deleteById(id);
     }
 
