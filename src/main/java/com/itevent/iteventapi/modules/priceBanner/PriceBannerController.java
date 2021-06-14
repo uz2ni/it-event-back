@@ -43,4 +43,10 @@ public class PriceBannerController {
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
 
+    @DeleteMapping("/price-banner/{id}")
+    public ResponseEntity<JsonResponse> deletePriceBanner(@PathVariable Long id) {
+        priceBannerService.deleteEvent(id);
+        return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
+    }
+
 }

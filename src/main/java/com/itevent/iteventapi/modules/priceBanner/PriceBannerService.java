@@ -33,7 +33,7 @@ public class PriceBannerService {
     private PriceBanner getPriceBannerAndExistCheck(Long id) {
         PriceBanner priceBanner = priceBannerRepository.findById(id).orElse(null);
         if(priceBanner == null) {
-            throw new IllegalArgumentException("요청한 브랜드가 존재하지 않습니다. [id : " + id + "]");
+            throw new IllegalArgumentException("요청한 배너가 존재하지 않습니다. [id : " + id + "]");
         }
         return priceBanner;
     }
@@ -47,5 +47,10 @@ public class PriceBannerService {
     public void updateBanner(Long id, PriceBannerReqDto priceBannerDto) {
         PriceBanner priceBanner = getPriceBannerAndExistCheck(id);
         PriceBanner.of(priceBannerDto, priceBanner);
+    }
+
+    public void deleteEvent(Long id) {
+        getPriceBannerAndExistCheck(id);
+        priceBannerRepository.deleteById(id);
     }
 }
