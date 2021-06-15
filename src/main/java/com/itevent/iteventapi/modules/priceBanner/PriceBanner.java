@@ -28,10 +28,14 @@ public class PriceBanner extends CommonField {
 
     private Long price;
 
-    @Lob
-    private String bannerImage;
-
     private String landingUrl;
+
+    /* banner image */
+    private String originalFileName;
+
+    private String storedFilePath;
+
+    private long fileSize;
 
     public static PriceBanner of(PriceBannerReqDto reqDto, Shop shop) {
         PriceBanner priceBanner = ModelMapperUtils.getModelMapper().map(reqDto, PriceBanner.class);

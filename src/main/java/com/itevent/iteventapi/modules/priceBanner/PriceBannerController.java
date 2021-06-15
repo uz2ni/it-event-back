@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -20,8 +21,14 @@ public class PriceBannerController {
     private final PriceBannerService priceBannerService;
 
     @PostMapping("/price-banner")
-    public ResponseEntity<JsonResponse> addPriceBanner(@Valid @RequestBody PriceBannerReqDto priceBannerDto) {
-        priceBannerService.createBanner(priceBannerDto);
+    public ResponseEntity<JsonResponse> addPriceBanner(@RequestParam(value="title") String title,
+                                                       @RequestPart(value="bannerImg", required = false) MultipartFile file) {
+        //priceBannerService.createBanner(priceBannerDto);
+        System.out.println("title:");
+        System.out.println(title);
+        System.out.println("file:");
+        System.out.println(file);
+
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
 
