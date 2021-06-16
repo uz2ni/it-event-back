@@ -1,11 +1,10 @@
 package com.itevent.iteventapi.modules.priceBanner;
 
 import com.itevent.iteventapi.common.response.JsonResponse;
-import com.itevent.iteventapi.modules.event.dto.EventReqDto;
-import com.itevent.iteventapi.modules.event.dto.EventResDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerListResDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerReqDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerResDto;
+import com.itevent.iteventapi.modules.priceBanner.dto.testDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +20,14 @@ public class PriceBannerController {
     private final PriceBannerService priceBannerService;
 
     @PostMapping("/price-banner")
-    public ResponseEntity<JsonResponse> addPriceBanner(@RequestParam(value="title") String title,
+    public ResponseEntity<JsonResponse> addPriceBanner(PriceBannerReqDto priceBannerDto,
                                                        @RequestPart(value="bannerImg", required = false) MultipartFile file) {
-        //priceBannerService.createBanner(priceBannerDto);
-        System.out.println("title:");
-        System.out.println(title);
-        System.out.println("file:");
-        System.out.println(file);
+        // TODO: File 업로드
+
+        // TODO: File 정보 DB 저장
+        // TODO: Banner DB 저장
+
+        //priceBannerService.createBanner(priceBannerDto, file);
 
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
