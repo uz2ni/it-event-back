@@ -7,6 +7,7 @@ import com.itevent.iteventapi.modules.shop.Shop;
 import com.itevent.iteventapi.modules.shop.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -19,8 +20,9 @@ public class PriceBannerService {
     private final ShopService shopService;
     private final PriceBannerRepository priceBannerRepository;
 
-    public void createBanner(PriceBannerReqDto reqDto) {
+    public void createBanner(PriceBannerReqDto reqDto, MultipartFile file) {
         Shop shop = shopService.getShopAndExistCheck(reqDto.getShopId());
+
         PriceBanner priceBanner = PriceBanner.of(reqDto, shop);
         priceBannerRepository.save(priceBanner);
     }
