@@ -10,6 +10,7 @@ import lombok.*;
 @ToString
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class FileDto {
     private Long id;
     private String origFilename;

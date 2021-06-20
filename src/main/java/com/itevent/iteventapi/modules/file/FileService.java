@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 
 @Service
 @Transactional
@@ -25,13 +26,36 @@ public class FileService {
         return fileDto;
     }
 
-    public void upload(MultipartFile file) {
+    public Long upload(MultipartFile file) throws IOException {
+        try {
+            String origFileName = file.getOriginalFilename();
+            String fileName = origFileName; // TODO: 업로드용 파일명 변환
+            String folderName = file.getName();
 
-        String origFilename = file.getOriginalFilename();
-        String filename = file.getName();
+            String savePath = System.getProperty("user.dir") + "\\src\\uploadFiles\\" + folderName;
+            if (!new java.io.File(savePath).exists()) {
+                try {
+                    new java.io.File(savePath).mkdirs();
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+            }
+            String filePath = savePath + "\\" + fileName;
+            file.transferTo(new java.io.File(filePath));
 
-        // TODO: 지정 위치에 파일 저장
-        // TODO: 저장되는 폴더 없을 시 폴더 생성
+            // DB 저장
+            FileDto fileDto = FileDto.builder()
+                                    .origFilename(origFileName)
+                                    .filename(fileName)
+                                    .filePath(filePath).build();
+
+            Long fileId = saveFile(fileDto);
+
+            return fileId;
+
+        }catch (IOException e) {
+            throw new IOException(e);
+        }
 
     }
 

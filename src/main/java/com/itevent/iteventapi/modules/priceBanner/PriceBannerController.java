@@ -1,10 +1,10 @@
 package com.itevent.iteventapi.modules.priceBanner;
 
 import com.itevent.iteventapi.common.response.JsonResponse;
+import com.itevent.iteventapi.modules.file.FileService;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerListResDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerReqDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerResDto;
-import com.itevent.iteventapi.modules.priceBanner.dto.testDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,21 +12,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
 public class PriceBannerController {
 
     private final PriceBannerService priceBannerService;
+    private final FileService fileService;
 
     @PostMapping("/price-banner")
     public ResponseEntity<JsonResponse> addPriceBanner(PriceBannerReqDto priceBannerDto,
-                                                       @RequestPart(value="bannerImg", required = false) MultipartFile file) {
+                                                       @RequestPart(value="bannerImg", required = false) MultipartFile file) throws IOException {
         // TODO: File 업로드
-
-        // TODO: File 정보 DB 저장
-        // TODO: Banner DB 저장
-
+        Long fileId = fileService.upload(file);
         //priceBannerService.createBanner(priceBannerDto, file);
 
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
