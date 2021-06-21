@@ -2,6 +2,7 @@ package com.itevent.iteventapi.modules.file;
 
 import com.itevent.iteventapi.modules.file.dto.FileDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +15,9 @@ import java.io.IOException;
 public class FileService {
 
     private final FileRepository fileRepository;
+
+    @Value("${app.dataDir}")
+    private String dataDir;
 
     public Long saveFile(FileDto dto) {
         return fileRepository.save(File.of(dto)).getId();
@@ -32,7 +36,8 @@ public class FileService {
             String fileName = origFileName; // TODO: 업로드용 파일명 변환
             String folderName = file.getName();
 
-            String savePath = System.getProperty("user.dir") + "\\src\\uploadFiles\\" + folderName;
+            String savePath = dataDir + "\\uploadFiles\\" + folderName;
+
             if (!new java.io.File(savePath).exists()) {
                 try {
                     new java.io.File(savePath).mkdirs();
