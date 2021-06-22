@@ -8,6 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 @Service
 @Transactional
@@ -32,12 +35,17 @@ public class FileService {
 
     public Long upload(MultipartFile file) throws IOException {
         try {
-            String origFileName = file.getOriginalFilename();
-            String fileName = origFileName; // TODO: 업로드용 파일명 변환
+            // file명 변환
+            String origFileName = file.getOriginalFilename(); //xxx.jpg
+            String onlyFileName = origFileName.substring(0, origFileName.indexOf(".")); // xxx
+            String extension = origFileName.substring(origFileName.indexOf(".")); // .jpg
+
+            String fileName = onlyFileName + "_" + getCurrentDayTime() + extension; // xxx_20210622-22-23-10.jpg
             String folderName = file.getName();
 
             String savePath = dataDir + "\\uploadFiles\\" + folderName;
 
+            // 디렉토리 존재 체크 및 생성
             if (!new java.io.File(savePath).exists()) {
                 try {
                     new java.io.File(savePath).mkdirs();
@@ -45,6 +53,7 @@ public class FileService {
                     e.getStackTrace();
                 }
             }
+
             String filePath = savePath + "\\" + fileName;
             file.transferTo(new java.io.File(filePath));
 
@@ -62,6 +71,12 @@ public class FileService {
             throw new IOException(e);
         }
 
+    }
+
+    private String getCurrentDayTime(){
+        long time = System.currentTimeMillis();
+        SimpleDateFormat dayTime = new SimpleDateFormat("yyyyMMdd-HH-mm-ss", Locale.KOREA);
+        return dayTime.format(new Date(time));
     }
 
 }
