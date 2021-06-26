@@ -2,6 +2,7 @@ package com.itevent.iteventapi.modules.priceBanner;
 
 import com.itevent.iteventapi.common.CommonField;
 import com.itevent.iteventapi.common.utils.ModelMapperUtils;
+import com.itevent.iteventapi.modules.file.File;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerReqDto;
 import com.itevent.iteventapi.modules.shop.Shop;
 import lombok.*;
@@ -30,11 +31,13 @@ public class PriceBanner extends CommonField {
 
     private String landingUrl;
 
-    private Long imageId;
+    @OneToOne
+    private File image;
 
-    public static PriceBanner of(PriceBannerReqDto reqDto, Shop shop) {
+    public static PriceBanner of(PriceBannerReqDto reqDto, Shop shop, File image) {
         PriceBanner priceBanner = ModelMapperUtils.getModelMapper().map(reqDto, PriceBanner.class);
         priceBanner.setShop(shop);
+        priceBanner.setImage(image);
         return priceBanner;
     }
 

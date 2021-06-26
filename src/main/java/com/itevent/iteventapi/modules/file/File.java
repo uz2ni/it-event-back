@@ -1,5 +1,6 @@
 package com.itevent.iteventapi.modules.file;
 
+import com.itevent.iteventapi.common.CommonField;
 import com.itevent.iteventapi.common.utils.ModelMapperUtils;
 import com.itevent.iteventapi.modules.file.dto.FileDto;
 import lombok.*;
@@ -16,7 +17,7 @@ import javax.persistence.Id;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class File {
+public class File  extends CommonField {
 
     @Id
     @GeneratedValue
