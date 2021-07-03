@@ -1,5 +1,8 @@
 package com.itevent.iteventapi.modules.priceBanner;
 
+import com.itevent.iteventapi.modules.file.File;
+import com.itevent.iteventapi.modules.file.FileService;
+import com.itevent.iteventapi.modules.file.dto.FileDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerListResDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerReqDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerResDto;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -18,12 +22,20 @@ import java.util.List;
 public class PriceBannerService {
 
     private final ShopService shopService;
+    private final FileService fileService;
     private final PriceBannerRepository priceBannerRepository;
 
-    public void createBanner(PriceBannerReqDto reqDto, MultipartFile file) {
+
+    public void createBanner(PriceBannerReqDto reqDto, MultipartFile mfile) throws IOException {
+
+        // file upload
+        Long fileId = fileService.upload(mfile);
+        FileDto fileDto = fileService.getFile(fileId);
+        File file = File.of(fileDto);
+
         Shop shop = shopService.getShopAndExistCheck(reqDto.getShopId());
 
-        PriceBanner priceBanner = PriceBanner.of(reqDto, shop);
+        PriceBanner priceBanner = PriceBanner.of(reqDto, shop, file);
         priceBannerRepository.save(priceBanner);
     }
 

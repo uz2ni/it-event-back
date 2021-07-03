@@ -24,9 +24,7 @@ public class PriceBannerController {
     @PostMapping("/price-banner")
     public ResponseEntity<JsonResponse> addPriceBanner(PriceBannerReqDto priceBannerDto,
                                                        @RequestPart(value="bannerImg", required = false) MultipartFile file) throws IOException {
-        // TODO: File 업로드
-        Long fileId = fileService.upload(file);
-        //priceBannerService.createBanner(priceBannerDto, file);
+        priceBannerService.createBanner(priceBannerDto, file);
 
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
