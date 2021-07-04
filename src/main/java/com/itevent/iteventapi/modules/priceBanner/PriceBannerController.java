@@ -1,7 +1,6 @@
 package com.itevent.iteventapi.modules.priceBanner;
 
 import com.itevent.iteventapi.common.response.JsonResponse;
-import com.itevent.iteventapi.modules.file.FileService;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerListResDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerReqDto;
 import com.itevent.iteventapi.modules.priceBanner.dto.PriceBannerResDto;
@@ -19,7 +18,6 @@ import java.io.IOException;
 public class PriceBannerController {
 
     private final PriceBannerService priceBannerService;
-    private final FileService fileService;
 
     @PostMapping("/price-banner")
     public ResponseEntity<JsonResponse> addPriceBanner(PriceBannerReqDto priceBannerDto,
