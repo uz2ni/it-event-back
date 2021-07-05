@@ -1,7 +1,9 @@
 package com.itevent.iteventapi.modules.heart;
 
 import com.itevent.iteventapi.common.CommonField;
+import com.itevent.iteventapi.common.utils.ModelMapperUtils;
 import com.itevent.iteventapi.modules.account.Account;
+import com.itevent.iteventapi.modules.heart.dto.HeartDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,15 +21,20 @@ public class Heart extends CommonField {
     @GeneratedValue
     private Long id;
 
-    @Column(unique = true)
+    @Column(nullable = false)
     private Long targetId;
 
-    @Column(nullable = false)
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Account account;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private HeartType heartType;
 
+    public static Heart of(HeartDto heartDto, Account account) {
+        Heart heart = ModelMapperUtils.getModelMapper().map(heartDto, Heart.class);
+        heart.setAccount(account);
+        heart.setTargetId(heart.getTargetId());
+        return heart;
+    }
 }
