@@ -37,4 +37,11 @@ public class Heart extends CommonField {
         heart.setTargetId(heart.getTargetId());
         return heart;
     }
+
+    public boolean isAccount(Account account) {
+        if(!account.getEmail().equals(this.account.getEmail())) {
+            throw new IllegalArgumentException("사용자가 동일하지 않습니다.");
+        }
+        return true;
+    }
 }

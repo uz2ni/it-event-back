@@ -21,4 +21,19 @@ public class HeartService {
         Heart heart = Heart.of(heartDto, account);
         heartRepository.save(heart);
     }
+
+    public void deleteHeart(Long id, Account account) {
+        Heart heart = getHeartAndExistCheck(id);
+        if(heart.isAccount(account)) {
+            heartRepository.deleteById(id);
+        }
+    }
+
+    private Heart getHeartAndExistCheck(Long id) {
+        Heart heart = heartRepository.findById(id).orElse(null);
+        if(heart == null) {
+            throw new IllegalArgumentException("요청한 찜이 없습니다. [id : " + id + "]");
+        }
+        return heart;
+    }
 }

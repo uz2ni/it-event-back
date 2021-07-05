@@ -7,9 +7,7 @@ import com.itevent.iteventapi.modules.heart.dto.HeartDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,5 +24,12 @@ public class HeartController {
         heartService.createHeart(heartDto, account);
         return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/heart/{id}")
+    public ResponseEntity<JsonResponse> deleteHeart(@CurrentAccount Account account, @PathVariable Long id) {
+        heartService.deleteHeart(id, account);
+        return new ResponseEntity<JsonResponse>(new JsonResponse(), HttpStatus.OK);
+    }
+
 
 }
