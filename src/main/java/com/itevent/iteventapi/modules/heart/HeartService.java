@@ -18,6 +18,7 @@ public class HeartService {
 
     public void createHeart(HeartDto heartDto, Account account) {
         accountService.getAccountAndExistCheck(account.getEmail());
+        // TODO: 동일한 Account의 targetID 중복 체크
         Heart heart = Heart.of(heartDto, account);
         heartRepository.save(heart);
     }

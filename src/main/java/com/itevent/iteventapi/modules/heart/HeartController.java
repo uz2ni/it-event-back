@@ -4,9 +4,11 @@ import com.itevent.iteventapi.common.response.JsonResponse;
 import com.itevent.iteventapi.modules.account.Account;
 import com.itevent.iteventapi.modules.account.CurrentAccount;
 import com.itevent.iteventapi.modules.heart.dto.HeartDto;
+import com.itevent.iteventapi.modules.heart.validate.HeartValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,8 +18,10 @@ import javax.validation.Valid;
 public class HeartController {
 
     private final HeartService heartService;
+    private final HeartValidator heartValidator;
 
-    // TODO: targetId Valid Check
+    @InitBinder("heartDto")
+    public void initBinder(WebDataBinder webDataBinder) { webDataBinder.addValidators(heartValidator); }
 
     @PostMapping("/heart")
     public ResponseEntity<JsonResponse> addHeart(@CurrentAccount Account account, @Valid @RequestBody HeartDto heartDto) {
